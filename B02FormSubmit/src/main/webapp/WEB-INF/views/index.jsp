@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+		// 내장객체 out을 이용하여 출력
+		out.println("<h2>index.jsp</h2>");
+		out.println("Hello~index!!");
+	%>
+</body>
+</html>
