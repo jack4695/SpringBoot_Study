@@ -19,7 +19,7 @@
         <td><input type="text" name="pass" value="" /></td>
       </tr>
       <tr>
-        <th>이름</th>
+        <th>이름</th>  
         <td><input type="text" name="name" value="" /></td>
       </tr>
     </table>
