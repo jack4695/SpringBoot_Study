@@ -3,6 +3,7 @@ package com.edu.springboot.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class MemberDAO implements IMemberService{
 		// 회원 레코드를 가입일을 내림차순 정렬해서 인출하는 쿼리문
 		String sql = "select * from member order by regidate desc";
 		
+		
 		/*
 		query() 메서드를 통해 select 쿼리문을 시행한다. 쿼리문 실행 후
 		반환되는 ResultSet은 RowMapper가 자동으로 반복하여 DTO에 저장한 후
@@ -42,8 +44,35 @@ public class MemberDAO implements IMemberService{
 		즉, 레코드를 List에 저장하기 위한 반복적인 작업을 자동으로 수행해준다. */
 		return jdbcTemplate.query(sql,
 				new BeanPropertyRowMapper<MemberDTO>(MemberDTO.class));
+		
 	}
-
+	/***********************************************************************/
+	
+	// 회원 검색
+	@Override
+	   public List<MemberDTO> search(MemberDTO memberDTO) {
+	      String field = memberDTO.getSearchField();  
+	       String keyword = memberDTO.getSearchKeyword(); 
+	      
+	      String sql = "select * from member where "
+	            + field
+	            + " like ?"
+	            + " order by regidate desc";
+	      
+	      try {
+	         return jdbcTemplate.query(
+	                  sql,
+	                  new BeanPropertyRowMapper<>(MemberDTO.class),
+	                  "%" + keyword + "%"
+	              );
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         return new ArrayList<>();
+	      }
+	   }
+	/***********************************************************************/
+	
+	
 	//회원등록
 	@Override
 	public int insert(MemberDTO memberDTO) {

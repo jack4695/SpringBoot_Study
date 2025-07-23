@@ -14,6 +14,8 @@ DAO 클래스의 부모 역할을 담당한다.
 public interface IMemberService {
 	// 회원목록(리스트)
 	public List<MemberDTO> select();
+	// 회원검색(리스트)
+	public List<MemberDTO> search(MemberDTO memberDTO);
 	// 회원정보 추가
 	public int insert(MemberDTO memberDTO);
 	//회원정보조회

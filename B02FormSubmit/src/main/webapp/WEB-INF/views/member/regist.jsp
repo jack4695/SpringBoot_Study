@@ -5,9 +5,30 @@
 <head>
 <meta charset="UTF-8">
 <title>quiz</title>
-<link rel="stylesheet" href="/css/memberStyle.css">
-<script src="/js/memberValidate.js"></script>
+<!-- CSS 파일 링크 -->
+<link rel="stylesheet" href="./css/memberStyle.css">
+<!-- JS 파일 링크 -->
+<script src="./js/memberValidate.js"></script>
+<!-- 다음 우편번호 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function postOpen(){    
+    new daum.Postcode({
+        oncomplete: function(data) {
+            console.log(data);
+            console.log(data.zonecode);
+            console.log(data.address);
+            
+            let frm = document.myform;
+            frm.zipcode.value = data.zonecode;
+            frm.addr1.value = data.address;
+            frm.addr2.focus();
+        }
+    }).open();
+}
+</script>
 </head>
+
 <body>
 	<h2>퀴즈]회원가입폼에서 전송된 값</h2>
 	

@@ -106,6 +106,7 @@ public class MainController {
 	/****** 퀴즈 ******/
 	@RequestMapping("/memberRegist.do")
 	public String regist(MemberDTO memberDTO) {
+		// 모든 폼값은 커맨드객체인 DTO를 통해 한번에 받는다.
 		return "member/regist";
 	}
 	

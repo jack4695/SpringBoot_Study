@@ -14,74 +14,64 @@ import com.edu.springboot.jdbc.MemberDTO;
 @Controller
 public class MainController {
 
-	/* Service역할을 인터페이스의 빈을 자동주입 받는다. 이를 통해
-	DAO의 메서드를 호출할 수 있다. (계정 가입, 조회, 삭제 등등) */
+	
+	@RequestMapping("/")
+	public String main(Model model) {
+		return "main";
+	}
+	/*
+	Mapper 인터페이스를 통해 XML파일에 정의된 메서드를 호출하게 되므로
+	자동주입 받아서 준비한다. 해당 인터페이스는 @Mapper가 부착되어 있으므로
+	컨테이너가 시작될때 자동으로 빈이 생성된다. */
 	@Autowired
 	IMemberService dao;
 	
-	@RequestMapping("/")
-	public String main() {
-		return "main";
-	}
 	
 	// 회원목록
 	@RequestMapping("/list.do")
 	public String member2(Model model) {
-		/* DAO의 select()메서드 호출 후 반환되는 List<MemberDTO>를
-		 영역에 저장한다.  */
+		/*
+		dao.select()를 통해 인터페이스의 추상메서드를 호출한다. 
+		그러면 인터페이스와 연결된 Mapper에 정의된 특정 엘리먼트가 호출되어
+		쿼리문이 실행되고 결과를 반환한다. 
+		*/
 		model.addAttribute("memberList", dao.select());
 		return "list";
 	}
 	
-	/*
-	@RequestMapping 어노테이션을 통해 매핑할때 아래와 같이 value, method속성을
-	추가해서 요청명과 전송방식을 설정할 수 있다. 하지만 Spring boot 3.x 에서는
-	매핑시 @GetMapping, @PostMapping의 사용을 권고하고 있다. */
-	
-	// 회원등록 페이지 매핑
-//	@RequestMapping(value="/regist.do", method=RequestMethod.GET)
-	@GetMapping("/regist.do")
+	// 글쓰기 페이지 진입하기
+	@RequestMapping(value="/regist.do", method=RequestMethod.GET)
 	public String member1() {
 		return "regist";
 	}
-	//회원 등록 처리
-//	@RequestMapping(value="/regist.do", method=RequestMethod.POST)
-	@PostMapping("/regist.do")
+	// 글쓰기 처리하기
+	@RequestMapping(value="/regist.do", method=RequestMethod.POST)
 	public String member6(MemberDTO memberDTO) {
-		//입력한 폼값을 한번에 받은 후 DAO를 호출
 		int result = dao.insert(memberDTO);
-		//반환값을 통해 성공/실패 판단 가능
 		if(result==1) System.out.println("입력되었습니다.");
-		/*
-		컨트롤러에서 String을 반환하면 View의 경로로 포워드 되지만,
-		redirect: 를 사용하면 설정한 요청명으로 이동한다.*/
 		return "redirect:list.do";
 	}
+	
 	
 	//회원 수정
 	@RequestMapping(value="/edit.do", method=RequestMethod.GET)
 	public String member3(MemberDTO memberDTO, Model model) {
-		//파라미터로 전달된 아이디는 커맨드객체인 DTO를 통해 받는다.
 		memberDTO = dao.selectOne(memberDTO);
-		//영역에 DTO 저장
 		model.addAttribute("dto", memberDTO);
-		//View 로 포워드
 		return "edit";
 	}
 	
 	//수정처리
 	@RequestMapping(value="/edit.do", method=RequestMethod.POST)
 	public String member7(MemberDTO memberDTO) {
-		//폼값 DTO에 한꺼번에
 		int result = dao.update(memberDTO);
 		if(result==1) System.out.println("수정되었습니다.");
 		return "redirect:list.do";
 	}
 	
-	//회원 삭제
-	@RequestMapping("/delete.do")
+	//삭제처리
+	@GetMapping("/delete.do")
 	public String member4(MemberDTO memberDTO) {
-		//폼값 DTO에 한꺼번에
 		int result = dao.delete(memberDTO);
 		if(result==1) System.out.println("삭제되었습니다.");
 		return "redirect:list.do";

@@ -161,18 +161,4 @@ function idCheck(fn){
         fn.id.readOnly = true;
     }
 }
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-function postOpen(){    
-    new daum.Postcode({
-        oncomplete: function(data) {
-            console.log(data);
-            console.log(data.zonecode);
-            console.log(data.address);
-            
-            let frm = document.myform;
-            frm.zipcode.value = data.zonecode;
-            frm.addr1.value = data.address;
-            frm.addr2.focus();
-        }
-    }).open();
-}
+
