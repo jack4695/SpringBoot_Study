@@ -26,6 +26,29 @@ public class MainController {
 		return "main";
 	}
 	
+	
+	/*********** 내가 작성한 코드  *************/
+//	   //회원목록
+//	   @GetMapping("/list.do")
+//	   public String member2(MemberDTO dto, Model model) {
+//	      System.out.println(dto);
+//	      
+//	      List<MemberDTO> list;
+//	      
+//	       if (dto.getSearchField() != null && dto.getSearchKeyword() != null) {
+//	           list = dao.search(dto); // 검색
+//	       } else {
+//	           list = dao.select(); // 전체
+//	       }
+//	      /*
+//	      검색기능추가 : 목록에서 사용자가 입력한 검색필드, 검색어를 DTO를 통해
+//	      		한번에 받으므로, 이것을 DAOㄹ로 전달해야한다.
+//	      */
+//	      model.addAttribute("memberList", list);
+//	      return "list";
+//	   }
+	   
+	   /*********** 선생님 코드  *************/
 	   //회원목록
 	   @GetMapping("/list.do")
 	   public String member2(MemberDTO dto, Model model) {
@@ -38,10 +61,16 @@ public class MainController {
 	       } else {
 	           list = dao.select(); // 전체
 	       }
-	      
+	      /*
+	      검색기능추가 : 목록에서 사용자가 입력한 검색필드, 검색어를 DTO를 통해
+	      		한번에 받으므로, 이것을 DAOㄹ로 전달해야한다.
+	      */
 	      model.addAttribute("memberList", list);
 	      return "list";
 	   }
+	   
+	   
+	   
 	
 	/*
 	@RequestMapping 어노테이션을 통해 매핑할때 아래와 같이 value, method속성을

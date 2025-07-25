@@ -15,6 +15,7 @@ public interface IMemberService {
 	// 회원목록(리스트)
 	public List<MemberDTO> select();
 	// 회원검색(리스트)
+	// 부모 인터페이스에서 추상메서드를 수정하면 자식인 DAO클래스에서도 함께 변경해야한다.
 	public List<MemberDTO> search(MemberDTO memberDTO);
 	// 회원정보 추가
 	public int insert(MemberDTO memberDTO);

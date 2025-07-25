@@ -10,7 +10,19 @@
 <body>
 	<h2>회원리스트</h2>
 	
+	<!-- 선생님 코드 -->
+	<script>
+		const formValidate = (fm) => {
+			//검색어가 빈값인지 확인하여 경고창 띄움
+			if(fm.searchKeyword.value=='') {
+				alert("검색어를 입력하세요.");
+				fm.searchKeyword.focus();
+				return false;
+			}
+		}
+	</script>
 	
+	<!-- 내가 만든 코드 -->
 	<form name="searchFrm" action="list.do">
 		<select name="searchField">
 			<option value="id">아이디
@@ -22,6 +34,24 @@
 		</button>
 		
 	</form>
+	
+	<!-- 선생님 코드 -->
+	<form onsubmit="return formValidate(this);">
+	<table border="1">
+	<tr>
+		<td>
+			<select name="searchField">
+				<option value="id">아이디</option>
+				<option value="name">이름</option>
+			</select>
+			<input type="text" name="searchKeyword" />
+			<input type="submit" value="검색" />
+		</td>
+	</tr>
+	</table>
+	</form>
+	
+	
 	
 	
 	<table border="1">

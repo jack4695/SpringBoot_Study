@@ -46,29 +46,23 @@ public class MemberDAO implements IMemberService{
 				new BeanPropertyRowMapper<MemberDTO>(MemberDTO.class));
 		
 	}
-	/***********************************************************************/
+	/***********************    선생님 코드     **********************/
 	
 	// 회원 검색
 	@Override
 	   public List<MemberDTO> search(MemberDTO memberDTO) {
-	      String field = memberDTO.getSearchField();  
-	       String keyword = memberDTO.getSearchKeyword(); 
 	      
-	      String sql = "select * from member where "
-	            + field
-	            + " like ?"
-	            + " order by regidate desc";
+	      String sql = "select * from member where ";
+	    		  
+	    	if(memberDTO.getSearchField()!=null &&
+	    			memberDTO.getSearchKeyword()!=null) {
+	    		sql += " WHERE " + memberDTO.getSearchField()
+	    				+ "LIKE '%" + memberDTO.getSearchKeyword() +"%' ";    		
+	    	}
+	            sql += " order by regidate desc";
 	      
-	      try {
-	         return jdbcTemplate.query(
-	                  sql,
-	                  new BeanPropertyRowMapper<>(MemberDTO.class),
-	                  "%" + keyword + "%"
-	              );
-	      } catch (Exception e) {
-	         e.printStackTrace();
 	         return new ArrayList<>();
-	      }
+	      
 	   }
 	/***********************************************************************/
 	
